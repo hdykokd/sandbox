@@ -10,6 +10,8 @@ const server = express()
 
 const schema = makeExecutableSchema({typeDefs, resolvers})
 
+const PORT = 3000
+
 server.use(
   '/graphql',
   bodyParser.json(),
@@ -20,7 +22,7 @@ server.use(
 
 server.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}))
 
-server.listen(4000, err => {
+server.listen(PORT, err => {
   if (err) throw err
-  console.log('Ready on http://localhost:4000')
+  console.log(`Ready on http://localhost:${PORT}`)
 })
