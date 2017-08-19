@@ -1,46 +1,23 @@
-import Vue from 'vue'
-
 import 'isomorphic-fetch'
 
+import Vue from 'vue'
 import {ApolloClient, createNetworkInterface} from 'apollo-client'
-// import {
-//   SubscriptionClient,
-//   addGraphQLSubscriptions,
-// } from 'subscriptions-transport-ws'
+import VueApollo from 'vue-apollo'
+import App from './App.vue'
 
+const uri = 'http://localhost:3000/graphql'
 const networkInterface = createNetworkInterface({
-  uri: 'http://localhost:3000/graphql',
-  // transportBatching: true,
+  uri,
+  transportBatching: true,
 })
-
-// const wsClient = new SubscriptionClient('ws://localhost:3000/subscriptions', {
-//   reconnect: true,
-// })
-
-// const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
-//   networkInterface,
-//   wsClient
-// )
 
 const apolloClient = new ApolloClient({networkInterface})
 
-// const apolloClient = new ApolloClient({
-//   networkInterface: networkInterfaceWithSubscriptions,
-//   // ssrForceFetchDelay: 100,
-//   connectToDevTools: true,
-// })
-
-import VueApollo from 'vue-apollo'
 Vue.use(VueApollo)
 
 const apolloProvider = new VueApollo({
-  clients: {
-    a: apolloClient,
-  },
   defaultClient: apolloClient,
 })
-
-import App from './App.vue'
 
 new Vue({
   el: '#app',

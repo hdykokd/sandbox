@@ -4,8 +4,8 @@ const Users = require('../../apps/user/models')
 
 const resolvers = {
   Query: {
-    hello(root) {
-      return 'world'
+    hello(root, args, context) {
+      return 'Hello world!'
     },
     user(root, {_id}) {
       return Users.findOne(ObjectId(_id))
@@ -28,5 +28,4 @@ const resolvers = {
   },
 }
 
-console.log(resolvers)
 module.exports = {resolvers}

@@ -1,28 +1,28 @@
-const {graphqlExpress, graphiqlExpress} = require('graphql-server-express')
-const bodyParser = require('body-parser')
-const {makeExecutableSchema} = require('graphql-tools')
+const PORT = 3000
+
 const express = require('express')
+const bodyParser = require('body-parser')
+const graphqlHttp = require('express-graphql')
+const cors = require('cors')
+
+const {makeExecutableSchema} = require('graphql-tools')
 
 const typeDefs = require('./graphql/type-defs')
 const {resolvers} = require('./graphql/resolvers')
 
-const server = express()
-
 const schema = makeExecutableSchema({typeDefs, resolvers})
 
-const PORT = 3000
+const server = express()
 
+server.use('/graphi', express.static(`${__dirname}/public`))
 server.use(
   '/graphql',
-  bodyParser.json(),
-  graphqlExpress({
+  cors(),
+  graphqlHttp({
     schema,
+    graphiql: true,
   })
 )
 
-server.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}))
-
-server.listen(PORT, err => {
-  if (err) throw err
-  console.log(`Ready on http://localhost:${PORT}`)
-})
+server.listen(PORT)
+console.log(`Ready on http://localhost:${PORT}`)

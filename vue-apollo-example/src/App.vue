@@ -4,37 +4,33 @@
       <img src="./assets/logo.png">
     </div>
     <h1>Vue Apollo Integration</h1>
-      <a href="#" @click="getUsers">getuser</a>
-    <h2>Tags</h2>
-    <h2>Pagination</h2>
+    <h3>Hello</h3>
+    <p>{{hello}}</p>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 
+const helloQuery = gql`
+  query {
+    hello
+  }
+`
+
 export default {
   name: 'app',
   data() {
-    return {}
+    return {
+      hello: '',
+    }
   },
   apollo: {
-    $client: 'a',
-  },
-  methods: {
-    getUsers() {
-      console.log('getUsers')
-      gql`
-        query {
-          users {
-            id
-            name
-            age
-          }
-        }
-      `
+    hello: {
+      query: helloQuery,
     },
   },
+  methods: {},
   mounted() {},
 }
 </script>
